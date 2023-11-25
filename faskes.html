@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis Fasilitas Kesehatan Sleman</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.42.0/apexcharts.min.css"
+        integrity="sha512-nnNXPeQKvNOEUd+TrFbofWwHT0ezcZiFU5E/Lv2+JlZCQwQ/ACM33FxPoQ6ZEFNnERrTho8lF0MCEH9DBZ/wWw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Style Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <!-- Search CSS Library -->
+    <link rel="stylesheet" href="assets/plugins/leaflet-search/leaflet-search.css" />
+
+    <!-- Geolocation CSS Library for Plugin -->
+    <link rel="stylesheet"
+        href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css" />
+
+    <!-- Leaflet Mouse Position CSS Library -->
+    <link rel="stylesheet" href="assets/plugins/leaflet-mouseposition/L.Control.MousePosition.css" />
+
+    <!-- Leaflet Measure CSS Library -->
+    <link rel="stylesheet" href="assets/plugins/leaflet-measure/leaflet-measure.css" />
+
+    <!-- EasyPrint CSS Library -->
+    <link rel="stylesheet" href="assets/plugins/leaflet-easyprint/easyPrint.css" />
+
+    <!-- Marker Cluster -->
+    <link rel="stylesheet" href="assets/plugins/leaflet-markercluster/MarkerCluster.css">
+    <link rel="stylesheet" href="assets/plugins/leaflet-markercluster/MarkerCluster.Default.css">
+
+    <!--Routing-->
+    <link rel="stylesheet" href="assets/plugins/leaflet-routing/leaflet-routing-machine.css" />
+
+    <style>
+        #map {
+            height: 700px;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .info h2 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"> <i class="fa-solid fa-chart-gantt"></i> Infrographic of Special Region of
+                Yogyakarta</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-disabled="true" data-bs-toggle="modal" data-bs-target="#infoModal">
+                            <i class="fa-solid fa-circle-info"></i>Info</a>
+                    </li>
+            </div>
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="infoModalLabel">Infografis dibuat oleh</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Nama: Dhiva</p>
+                    <p>NIM: 22/506069/SV/22054</p>
+                    <p>Kelas: B</p>
+                    <p>Sumber Data: <a href="https://slemankab.bps.go.id"
+                            target="_blank">https://slemankab.bps.go.id/</a></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.42.0/apexcharts.min.js"
+        integrity="sha512-HctQcT5hnI/elQck4950pvd50RuDnjCSGSoHI8CNyQIYVxsUoyJ+gSQIOrll4oM/Z7Kfi7WCLMIbJbiwYHFCpA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <div class="container">
+        <!-- <div class="jumbotron">
+            <h1 class="custom-text">Historical Tourist Destination</h1>
+            <p class="custom-text">Special Region of Yogyakarta</p>
+        </div> -->
+
+        <!-- Map Container -->
+        <div id="map"></div>
+
+        <!-- Bootstrap Grid for Additional Content -->
+
+        <div class="row">
+            <!-- <img src="assets/img/logo/tugu.jpg" class="custom-image" alt="Prambanan Temple"> -->
+            <div class="col-md-6">
+                <h2 class="custom-text">Yogyakarta</h2>
+                <p class="custom-text">Daerah Istimewa Yogyakarta (disingkat DIY, Jawa: ꦝꦌꦫꦃꦆꦱ꧀ꦠꦶꦩꦺꦮꦪꦺꦴꦒꦾꦏꦂꦠ, pengucapan
+                    bahasa Jawa: [ŋajogjɔkart̪ɔ], pelafalan tidak resmi: Jogja/Jogjakarta) adalah Daerah Istimewa
+                    setingkat provinsi di Indonesia yang merupakan peleburan dari Negara Kesultanan Yogyakarta dan
+                    Negara Kadipaten Paku Alaman. Daerah Istimewa Yogyakarta terletak di bagian selatan Pulau Jawa, dan
+                    berbatasan dengan Provinsi Jawa Tengah dan Samudra Hindia. Daerah Istimewa yang memiliki luas
+                    3.185,80 km2 ini terdiri atas satu kota, dan empat kabupaten, yang terbagi lagi menjadi 78
+                    kapanewon/kemantren, dan 438 kalurahan/kelurahan. Menurut sensus penduduk 2010 memiliki populasi
+                    3.452.390 jiwa dengan proporsi 1.705.404 laki-laki, dan 1.746.986 perempuan, serta memiliki
+                    kepadatan penduduk sebesar 1.084 jiwa per km2./p>
+            </div>
+
+            <div class="col-md-6">
+                <h2 class="custom-text">Sleman Regency</h2>
+                <p class="custom-text">Sleman (Jawa: ꦱ꧀ꦭꦺꦩꦤ꧀, translit. Sléman) adalah sebuah kapanewon atau setingkat
+                    kecamatan yang berada di Kabupaten Sleman, provinsi Daerah Istimewa Yogyakarta, Indonesia. Kapanewon
+                    Sleman juga sekaligus menjadi ibu kota dari Kabupaten Sleman.Secara administratif Kabupaten Sleman
+                    terdiri dari 17 kecamatan, yang memiliki 86 desa dan 1212 dusun. Wilayahnya berbatasan dengan semua
+                    kabupaten yang ada di Provinsi Daerah Istimewa Yogyakarta dan juga Propinsi Jawa Tengah. Secara
+                    Geografis Kabupaten Sleman terletak diantara 110° 33' 00″ dan 110° 13' 00″ Bujur Timur, 7° 34' 51″
+                    dan 7° 47' 30″ Lintang Selatan. Wilayah Kabupaten Sleman sebelah utara berbatasan dengan Kabupaten
+                    Boyolali, Propinsi Jawa Tengah, sebelah timur berbatasan dengan Kabupaten Klaten, Propinsi Jawa
+                    Tengah, sebelah barat berbatasan dengan Kabupaten Kulon Progo, Propinsi DIY dan Kabupaten Magelang,
+                    Propinsi Jawa Tengah dan sebelah selatan berbatasan dengan Kota Yogyakarta, Kabupaten Bantul dan
+                    Kabupaten Gunung Kidul, Propinsi D.I.Yogyakarta. Kabupaten Sleman dikenal sebagai pusat pendidikan
+                    tinggi di Indonesia. Beberapa perguruan tinggi terkenal, seperti Universitas Gadjah Mada (UGM) dan
+                    Institut Seni Indonesia (ISI), berlokasi di wilayah ini. Sleman memiliki berbagai objek wisata
+                    menarik, termasuk Candi Prambanan, yang merupakan situs warisan dunia UNESCO. Selain itu, wilayah
+                    ini juga dikenal dengan pesona alamnya yang indah.
+                </p>
+                <a href="https://www.indonesia.travel/gb/en/destinations/java/yogyakarta" class="btn btn-primary">See
+                    More</a>
+            </div>
+
+        </div>
+    </div>
+    <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"> <i class="fa-solid fa-chart-gantt"></i> Infrografis Kota Magelang</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-database"></i>Data</a>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-disabled="true" data-bs-toggle="modal" data-bs-target="#infoModal">
+                            <i class="fa-solid fa-circle-info"></i>Info</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav> -->
+    <div id="map"></div>
+
+    <!-- <div class="jumbotron text-center">
+        <h1>Infografis Kabupaten Sleman</h1>
+        <p>Resize this responsive page to see the effect!</p>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3>Column 1</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+            </div>
+            <div class="col-sm-6">
+                <h3>Column 2</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+                <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+            </div>
+        </div>
+    </div> -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- Search JavaScript Library -->
+    <script src="assets/plugins/leaflet-search/leaflet-search.js"></script>
+
+    <!-- Geolocation Javascript Library -->
+    <script
+        src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js"></script>
+
+    <!-- Leaflet Mouse Position JavaScript Library -->
+    <script src="assets/plugins/leaflet-mouseposition/L.Control.MousePosition.js"></script>
+
+    <!-- Leaflet Measure JavaScript Library -->
+    <script src="assets/plugins/leaflet-measure/leaflet-measure.js"></script>
+
+    <!-- Marker Cluster -->
+    <script src="assets/plugins/leaflet-markercluster/leaflet.markercluster.js"></script>
+    <script src="assets/plugins/leaflet-markercluster/leaflet.markercluster-src.js"></script>
+
+    <!--Routing-->
+    <script src="assets/plugins/leaflet-routing/leaflet-routing-machine.js"></script>
+    <script src="assets/plugins/leaflet-routing/leaflet-routing-machine.min.js"></script>
+
+    <!-- EasyPrint JavaScript Library -->
+    <script src="assets/plugins/leaflet-easyprint/leaflet.easyPrint.js"></script>
+    <script>
+        // tampilan awal peta
+        var map = L.map("map").setView([-7.8, 110.37], 12);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 30,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        /* Memanggil File GeoJSON Point 01*/
+        var wfsgeoserver = L.geoJson(null, {
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "assets/img/marker/fas_rumahsakit_rujukan.png", //URL icon marker
+                        iconSize: [32, 32], //ukuran icon marker
+                        iconAnchor: [16, 32], //icon marker offset
+                        popupAnchor: [0, -32], //popup offset
+                        tooltipAnchor: [16, -20] //tooltip offset
+                    })
+                });
+            },
+            onEachFeature: function (feature, layer) {
+                /* Variabel content untuk memanggil atribut dari data file geojson */
+                var content = "Kecamatan : " + feature.properties.kecamatan + "<br>" +
+                    "Kabupaten : " + "Sleman" + "<br>" +
+                    "Provinsi : " + "Daerah Istimewa Yogyakarta" + "<br>" + "Jumlah Penduduk : " +
+                    feature.properties.jumlah + "<br>";
+                layer.on({
+                    click: function (e) { //Fungsi ketika icon simbol di-klik
+                        wfsgeoserver.bindPopup(content);
+                    },
+                    mouseover: function (e) {
+                        wfsgeoserver.bindTooltip(feature.properties.kecamatan);
+                    },
+                    mouseout: function (e) {
+                        wfsgeoserver.closePopup();
+                    }
+                });
+            }
+        });
+
+        var title = new L.Control();
+        title.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+        title.update = function () {
+            this._div.innerHTML = '<h2> WEBGIS | JUMLAH PENDUDUK KABUPATEN SLEMAN</h2>MATAKULIAH PEMROGRAMAN GEOSPASIAL : WEB';
+        };
+        title.addTo(map);
+
+        /* Tile Basemap */// (note: pilihan basemap diakses pada https://leaflet-extras.github.io/leaflet-providers/preview/) 
+        var basemap1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="DIVSIG UGM" target="_blank">DIVSIG UGM</a>' //menambahkan nama
+        });
+
+        var basemap2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri | <a href="Latihan WebGIS" target="_blank">DIVSIG UGM</a>'
+        });
+
+        var basemap3 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri | <a href="Lathan WebGIS" target="_blank">DIVSIG UGM</a>'
+        });
+
+        var basemap4 = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+        });
+
+        basemap1.addTo(map);
+
+        /* Control Layer */
+        var baseMaps = {
+            "OpenStreetMap": basemap1,
+            "Esri World Street": basemap2,
+            "Esri Imagery": basemap3,
+            "Stadia Dark Mode": basemap4
+        };
+
+        L.control.layers(baseMaps).addTo(map);
+
+        //SIMBOLISASI
+        $.getJSON("wfsgeoserver.php", function (data) {
+            wfsgeoserver.addData(data);
+            map.addLayer(wfsgeoserver);
+            map.fitBounds(wfsgeoserver.getBounds());
+
+            // Style and Popup handling
+            wfsgeoserver.eachLayer(function (layer) {
+                var jumlah = layer.feature.properties.jumlah;
+
+                // Apply styling based on jumlah property
+                if (jumlah <= 50000) {
+                    layer.setStyle({
+                        fillColor: '#ffd0bb',
+                        fillOpacity: 1,
+                        weight: 1
+                    });
+                } else if (jumlah > 50000 && jumlah <= 75000) {
+                    layer.setStyle({
+                        fillColor: '#ff7f50',
+                        color: '#232323',
+                        fillOpacity: 1,
+                        weight: 1
+                    });
+                } else if (jumlah > 75000) {
+                    layer.setStyle({
+                        fillColor: '#b22222',
+                        color: '#232323',
+                        fillOpacity: 1,
+                        weight: 1
+                    });
+                }
+
+            });
+        })
+        //WATERMARK//
+        L.Control.Watermark = L.Control.extend({
+            onAdd: function (map) {
+                var img = L.DomUtil.create('img');
+                img.src = 'assets/img/logo/ugm.png';
+                img.style.width = '250px';
+                return img;
+            }
+        });
+
+        L.control.Watermark = function (opts) {
+            return new L.Control.Watermark(opts);
+        }
+        L.control.Watermark({ position: 'bottomleft' }).addTo(map);
+
+        //LEGENDA
+        L.Control.Legend = L.Control.extend({
+            onAdd: function (map) {
+                var img = L.DomUtil.create('img');
+                img.src = 'assets/img/legend/foto.png';
+                img.style.width = '250px';
+                return img;
+            }
+        });
+
+        L.control.Legend = function (opts) {
+            return new L.Control.Legend(opts);
+        }
+
+        L.control.Legend({ position: 'bottomleft' }).addTo(map);
+
+        //PLUGIN SEARCH
+        var searchControl = new L.Control.Search({
+            position: "topleft",
+            layer: wfsgeoserver, //Nama variabel layer
+            propertyName: "kecamatan", //Field untuk pencarian
+            marker: false,
+            moveToLocation: function (latlng, title, map) {
+                var zoom = map.getBoundsZoom(latlng.layer.getBounds());
+                map.setView(latlng, zoom);
+            },
+        });
+        searchControl
+            .on("search:locationfound", function (e) {
+                e.layer.setStyle({
+                    fillColor: "#ffff00",
+                    color: "#0000ff",
+                });
+            })
+            .on("search:collapse", function (e) {
+                featuresLayer.eachLayer(function (layer) {
+                    featuresLayer.resetStyle(layer);
+                });
+            });
+        map.addControl(searchControl);
+
+        //PLUGIN GEOLOCATION
+        var locateControl = L.control
+            .locate({
+                position: "topleft",
+                drawCircle: true,
+                follow: true,
+                setView: true,
+                keepCurrentZoomLevel: false,
+                markerStyle: {
+                    weight: 1,
+                    opacity: 0.8,
+                    fillOpacity: 0.8,
+                },
+                circleStyle: {
+                    weight: 1,
+                    clickable: false,
+                },
+                icon: "fas fa-crosshairs",
+                metric: true,
+                strings: {
+                    title: "Click for Your Location",
+                    popup: "You're here. Accuracy {distance} {unit}",
+                    outsideMapBoundsMsg: "Not available",
+                },
+                locateOptions: {
+                    maxZoom: 16,
+                    watch: true,
+                    enableHighAccuracy: true,
+                    maximumAge: 10000,
+                    timeout: 10000,
+                },
+            })
+            .addTo(map);
+
+        /*Plugin Mouse Position Coordinate */
+        L.control.mousePosition({ position: "bottomright", separator: ",", prefix: "Point Coodinate: " }).addTo(map);
+
+        /*Plugin Measurement Tool */
+        var measureControl = new L.Control.Measure({
+            position: "topleft",
+            primaryLengthUnit: "meters",
+            secondaryLengthUnit: "kilometers",
+            primaryAreaUnit: "hectares",
+            secondaryAreaUnit: "sqmeters",
+            activeColor: "#FF0000",
+            completedColor: "#00FF00",
+        });
+        measureControl.addTo(map);
+
+        /*Plugin EasyPrint */
+        L.easyPrint({
+            title: "Print",
+        }).addTo(map);
+
+        /*Plugin Routing*/
+        L.Routing.control({
+            waypoints: [
+                L.latLng(-7.757250394788797, 110.38332831001574),
+                L.latLng(-7.46959795472032, 110.22225746226437)
+            ],
+            routeWhileDragging: true
+        }).addTo(map);
+
+        /*Plugin Layer Marker*/
+        var addressPoints = [
+            [-7.788155961847819, 110.37863514563978, "Es Coklat Impian Lempuyangan"],
+            [-7.780890342541371, 110.3644954653724, "Makmur Chicken & Soda"],
+            [-7.783151392284568, 110.37456280881803, "Gramedia Sudirman"],
+            [-7.782771140047967, 110.36711697976575, "Tugu Jogja"]
+        ]
+
+        var markers = L.markerClusterGroup();
+
+        for (var i = 0; i < addressPoints.length; i++) {
+            var a = addressPoints[i];
+            var title1 = a[2];
+            var marker = L.marker(new L.LatLng(a[0], a[1]), {
+                title: title1
+            });
+
+            marker.bindPopup(title1);
+            markers.addLayer(marker);
+        }
+
+        map.addLayer(markers);
+
+    </script>
+</body>
+
+</html>

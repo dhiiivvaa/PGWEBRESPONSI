@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis Kabupaten Sleman</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.42.0/apexcharts.min.css"
+        integrity="sha512-nnNXPeQKvNOEUd+TrFbofWwHT0ezcZiFU5E/Lv2+JlZCQwQ/ACM33FxPoQ6ZEFNnERrTho8lF0MCEH9DBZ/wWw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Style Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <!-- Search CSS Library -->
+    <link rel="stylesheet" href="assets/plugins/leaflet-search/leaflet-search.css" />
+
+    <!-- Geolocation CSS Library for Plugin -->
+    <link rel="stylesheet"
+        href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css" />
+
+    <!-- Leaflet Mouse Position CSS Library -->
+    <link rel="stylesheet" href="assets/plugins/leaflet-mouseposition/L.Control.MousePosition.css" />
+
+    <!-- Leaflet Measure CSS Library -->
+    <link rel="stylesheet" href="assets/plugins/leaflet-measure/leaflet-measure.css" />
+
+    <!-- EasyPrint CSS Library -->
+    <link rel="stylesheet" href="assets/plugins/leaflet-easyprint/easyPrint.css" />
+
+    <!-- Marker Cluster -->
+    <link rel="stylesheet" href="assets/plugins/leaflet-markercluster/MarkerCluster.css">
+    <link rel="stylesheet" href="assets/plugins/leaflet-markercluster/MarkerCluster.Default.css">
+
+    <!--Routing-->
+    <link rel="stylesheet" href="assets/plugins/leaflet-routing/leaflet-routing-machine.css" />
+
+    <!-- Leaflet CSS Library -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        /* Tampilan peta fullscreen */
+        html,
+        body,
+        #map {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <!-- Leaflet JavaScript Library -->
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- Search JavaScript Library -->
+    <script src="assets/plugins/leaflet-search/leaflet-search.js"></script>
+
+    <!-- Geolocation Javascript Library -->
+    <script
+        src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js"></script>
+
+    <!-- Leaflet Mouse Position JavaScript Library -->
+    <script src="assets/plugins/leaflet-mouseposition/L.Control.MousePosition.js"></script>
+
+    <!-- Leaflet Measure JavaScript Library -->
+    <script src="assets/plugins/leaflet-measure/leaflet-measure.js"></script>
+
+    <!-- Marker Cluster -->
+    <script src="assets/plugins/leaflet-markercluster/leaflet.markercluster.js"></script>
+    <script src="assets/plugins/leaflet-markercluster/leaflet.markercluster-src.js"></script>
+
+    <!--Routing-->
+    <script src="assets/plugins/leaflet-routing/leaflet-routing-machine.js"></script>
+    <script src="assets/plugins/leaflet-routing/leaflet-routing-machine.min.js"></script>
+
+    <!-- EasyPrint JavaScript Library -->
+    <script src="assets/plugins/leaflet-easyprint/leaflet.easyPrint.js"></script>
+    <script>
+        // tampilan awal peta
+        var map = L.map("map").setView([-7.7, 110.37], 10);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 30,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        var markers = L.layerGroup();
+
+        /* Memanggil File GeoJSON Point 01*/
+        var wfsgeoserver1 = L.geoJson(null, {
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "assets/img/marker/fas_rumahsakit_rujukan.png", //URL icon marker
+                        iconSize: [32, 32], //ukuran icon marker
+                        iconAnchor: [16, 32], //icon marker offset
+                        popupAnchor: [0, -32], //popup offset
+                        tooltipAnchor: [16, -20] //tooltip offset
+                    })
+                });
+            },
+            onEachFeature: function (feature, layer) {
+                /* Variabel content untuk memanggil atribut dari data file geojson */
+                var content = "Kecamatan : " + feature.properties.kecamatan + "<br>" +
+                    "Kabupaten : " + "Sleman" + "<br>" +
+                    "Provinsi : " + "Daerah Istimewa Yogyakarta" + "<br>" + "Jumlah Penduduk : " +
+                    feature.properties.jumlah + "<br>";
+                layer.on({
+                    click: function (e) { //Fungsi ketika icon simbol di-klik
+                        wfsgeoserver1.bindPopup(content);
+                    },
+                    mouseover: function (e) {
+                        wfsgeoserver1.bindTooltip(feature.properties.kecamatan);
+                    },
+                    mouseout: function (e) {
+                        wfsgeoserver1.closePopup();
+                    }
+                });
+            }
+        });
+
+        var title = new L.Control();
+        title.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+        title.update = function () {
+            this._div.innerHTML = '<h2> WEBGIS | JUMLAH PENDUDUK KABUPATEN SLEMAN</h2>MATAKULIAH PEMROGRAMAN GEOSPASIAL : WEB';
+        };
+        title.addTo(map);
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var data = JSON.parse(this.responseText);
+
+                data.forEach(function (row) {
+                    var marker = L.marker([row.latitude, row.longitude]).addTo(markers);
+                    marker.bindPopup("<strong>" + row.faskes)
+                });
+
+                markers.addTo(map);
+                map.fitBounds(markers.getBounds());
+            }
+        };
+
+        xmlhttp.open("GET", "hehe.php", true);
+        xmlhttp.send()
+
+
+        //BASEMAPS!!!!!!!!!
+        var basemap1 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="DIVSIG UGM" target="_blank">DIVSIG UGM</a>'
+        });
+
+        var basemap2 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/ { z } / { y } / { x }', {
+            attribution: 'Tiles &copy; Esri | <a href="Latihan WebGIS" target="_blank">DIVSIG UGM</a>'
+        });
+
+        var basemap3 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{ x } ', {
+            attribution: 'Tiles &copy; Esri | <a href="Lathan WebGIS" target="_blank">DIVSIG UGM</a>'
+        });
+
+        var basemap4 = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org / ">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+        });
+
+        basemap3.addTo(map);
+
+        //* Layer Marker */
+        var marker1 = L.marker([-7.768601676747601, 110.37348363528506], { draggable: true });
+        marker1.addTo(map);
+        marker1.bindPopup("RSUP Dr. Sardjito");
+
+        var marker2 = L.marker([-7.776333728607208, 110.37763884589215]);
+        marker2.addTo(map);
+        marker2.bindPopup("RS Panti Rapih");
+
+        var marker3 = L.marker([-7.784032512110805, 110.37783017019787]);
+        marker3.addTo(map);
+        marker3.bindPopup("RS Bethesda Yogyakarta");
+
+        var marker4 = L.marker([-7.783405112295351, 110.39088889728791]);
+        marker4.addTo(map);
+        marker4.bindPopup("RS Siloam");
+
+        var marker5 = L.marker([-7.75758898416792, 110.40355093765396]);
+        marker5.addTo(map);
+        marker5.bindPopup("RS JIH");
+
+        var marker6 = L.marker([-7.905559018955166, 110.32058955300064]);
+        marker6.addTo(map);
+        marker6.bindPopup("RS Paru Respira Yogyakarta");
+
+        var marker7 = L.marker([-7.909332492081002, 110.29590875300063]);
+        marker7.addTo(map);
+        marker7.bindPopup("RS UII");
+
+        var marker8 = L.marker([-7.801128542675634, 110.36225586845293]);
+        marker8.addTo(map);
+        marker8.bindPopup("RS PKU Muhammadiyah Yogyakarta");
+
+        var marker9 = L.marker([-7.770030955322922, 110.43276186649037]);
+        marker9.addTo(map);
+        marker9.bindPopup("RS Hermina Yogya");
+
+        var marker10 = L.marker([-7.797621403297075, 110.41029600881815]);
+        marker10.addTo(map);
+        marker10.bindPopup("RSPAU Dr. S. Hardjolukito");
+
+        //* Control Layer */
+        var baseMaps = {
+            "OpenStreetMap": basemap1,
+            "Esri World Street": basemap2,
+            "Esri Imagery": basemap3,
+            "Stadia Dark Mode": basemap4
+        };
+        L.control.layers(baseMaps).addTo(map);
+
+        //SIMBOLISASI
+        $.getJSON("wfsgeoserver1.php", function (data) {
+            wfsgeoserver1.addData(data);
+            map.addLayer(wfsgeoserver1);
+            map.fitBounds(wfsgeoserver1.getBounds());
+
+            // Style and Popup handling
+            wfsgeoserver1.eachLayer(function (layer) {
+                var jumlah = layer.feature.properties.jumlah;
+
+                // Apply styling based on jumlah property
+                if (jumlah <= 50000) {
+                    layer.setStyle({
+                        fillColor: '#ffd0bb',
+                        fillOpacity: 1,
+                        weight: 1
+                    });
+                } else if (jumlah > 50000 && jumlah <= 75000) {
+                    layer.setStyle({
+                        fillColor: '#ff7f50',
+                        color: '#232323',
+                        fillOpacity: 1,
+                        weight: 1
+                    });
+                } else if (jumlah > 75000) {
+                    layer.setStyle({
+                        fillColor: '#b22222',
+                        color: '#232323',
+                        fillOpacity: 1,
+                        weight: 1
+                    });
+                }
+
+            });
+        })
+
+        var overlayMaps = {
+            "RSUP Dr. Sardjito": marker1,
+            "RS Panti Rapih": marker2,
+            "RS Bethesda Yogyakarta": marker3,
+            "RS Siloam": marker4,
+            "RS JIH": marker5,
+            "RS Paru Respira Yogyakarta": marker6,
+            "RS UII": marker7,
+            "RS PKU Muhammadiyah Yogyakarta": marker8,
+            "RS Hermina Yogya": marker9,
+            "RSPAU Dr. S. Hardjolukito": marker10,
+        };
+
+        L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
+
+//PLUGIN SEARCH
+var searchControl = new L.Control.Search({
+            position: "topleft",
+            layer: wfsgeoserver1, //Nama variabel layer
+            propertyName: "kecamatan", //Field untuk pencarian
+            marker: false,
+            moveToLocation: function (latlng, title, map) {
+                var zoom = map.getBoundsZoom(latlng.layer.getBounds());
+                map.setView(latlng, zoom);
+            },
+        });
+        searchControl
+            .on("search:locationfound", function (e) {
+                e.layer.setStyle({
+                    fillColor: "#ffff00",
+                    color: "#0000ff",
+                });
+            })
+            .on("search:collapse", function (e) {
+                featuresLayer.eachLayer(function (layer) {
+                    featuresLayer.resetStyle(layer);
+                });
+            });
+        map.addControl(searchControl);
+
+        //PLUGIN GEOLOCATION
+        var locateControl = L.control
+            .locate({
+                position: "topleft",
+                drawCircle: true,
+                follow: true,
+                setView: true,
+                keepCurrentZoomLevel: false,
+                markerStyle: {
+                    weight: 1,
+                    opacity: 0.8,
+                    fillOpacity: 0.8,
+                },
+                circleStyle: {
+                    weight: 1,
+                    clickable: false,
+                },
+                icon: "fas fa-crosshairs",
+                metric: true,
+                strings: {
+                    title: "Click for Your Location",
+                    popup: "You're here. Accuracy {distance} {unit}",
+                    outsideMapBoundsMsg: "Not available",
+                },
+                locateOptions: {
+                    maxZoom: 16,
+                    watch: true,
+                    enableHighAccuracy: true,
+                    maximumAge: 10000,
+                    timeout: 10000,
+                },
+            })
+            .addTo(map);
+
+        /*Plugin Mouse Position Coordinate */
+        L.control.mousePosition({ position: "bottomright", separator: ",", prefix: "Point Coodinate: " }).addTo(map);
+
+        /*Plugin Measurement Tool */
+        var measureControl = new L.Control.Measure({
+            position: "topleft",
+            primaryLengthUnit: "meters",
+            secondaryLengthUnit: "kilometers",
+            primaryAreaUnit: "hectares",
+            secondaryAreaUnit: "sqmeters",
+            activeColor: "#FF0000",
+            completedColor: "#00FF00",
+        });
+        measureControl.addTo(map);
+
+        /*Plugin EasyPrint */
+        L.easyPrint({
+            title: "Print",
+        }).addTo(map);
+
+        // /*Plugin Routing*/
+        // L.Routing.control({
+        //     waypoints: [
+        //         L.latLng(-7.757250394788797, 110.38332831001574),
+        //         L.latLng(-7.46959795472032, 110.22225746226437)
+        //     ],
+        //     routeWhileDragging: true
+        // }).addTo(map);
+
+        //* Scale Bar */
+        L.control.scale({
+            maxWidth: 150, position: 'bottomright'
+        }).addTo(map);
+
+    </script>
+</body>
+
+</html>
